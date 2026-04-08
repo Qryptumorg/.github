@@ -1,3 +1,25 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Qryptumorg/site/main/public/og-image.png" alt="Qryptum" width="100%" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Solidity-0.8.24-363636?style=flat-square&logo=solidity&logoColor=white" alt="Solidity" />
+  <img src="https://img.shields.io/badge/TypeScript-5.7-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React" />
+  <img src="https://img.shields.io/badge/Ethereum-L1-3C3C3D?style=flat-square&logo=ethereum&logoColor=white" alt="Ethereum" />
+  <img src="https://img.shields.io/badge/Sepolia-testnet-00B4D8?style=flat-square" alt="Sepolia" />
+  <img src="https://img.shields.io/badge/License-MIT-white?style=flat-square" alt="License" />
+</p>
+
+<p align="center">
+  <a href="https://github.com/Qryptumorg/contracts/actions/workflows/ci.yml"><img src="https://github.com/Qryptumorg/contracts/actions/workflows/ci.yml/badge.svg" alt="contracts CI" /></a>
+  <a href="https://github.com/Qryptumorg/app/actions/workflows/ci.yml"><img src="https://github.com/Qryptumorg/app/actions/workflows/ci.yml/badge.svg" alt="app CI" /></a>
+  <a href="https://github.com/Qryptumorg/api/actions/workflows/ci.yml"><img src="https://github.com/Qryptumorg/api/actions/workflows/ci.yml/badge.svg" alt="api CI" /></a>
+  <a href="https://github.com/Qryptumorg/db/actions/workflows/ci.yml"><img src="https://github.com/Qryptumorg/db/actions/workflows/ci.yml/badge.svg" alt="db CI" /></a>
+</p>
+
+---
+
 # Qryptum
 
 **Non-custodial, post-quantum ready token shielding protocol on Ethereum.**
@@ -63,8 +85,24 @@ They can choose to shield it into their own QRYPTANK if they want.
 |---|---|---|
 | [contracts](https://github.com/Qryptumorg/contracts) | ShieldFactory, PersonalVault, ShieldToken | Solidity 0.8.24, Hardhat |
 | [app](https://github.com/Qryptumorg/app) | Frontend dApp | React 19, Vite, wagmi, TypeScript |
-| [api](https://github.com/Qryptumorg/api) | Backend API | Express, TypeScript, PostgreSQL |
+| [api](https://github.com/Qryptumorg/api) | Backend REST API | Express, TypeScript, PostgreSQL |
 | [db](https://github.com/Qryptumorg/db) | Database schema | Drizzle ORM, PostgreSQL |
+| [site](https://github.com/Qryptumorg/site) | Marketing and docs site | React 19, Vite, Tailwind CSS v4 |
+
+## Stack
+
+<p>
+  <img src="https://img.shields.io/badge/Solidity-0.8.24-363636?style=for-the-badge&logo=solidity&logoColor=white" alt="Solidity" />
+  <img src="https://img.shields.io/badge/Hardhat-yellow?style=for-the-badge&logo=ethereum&logoColor=white" alt="Hardhat" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React" />
+  <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
+  <img src="https://img.shields.io/badge/wagmi-3C3C3D?style=for-the-badge&logo=ethereum&logoColor=white" alt="wagmi" />
+  <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express" />
+  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/Drizzle_ORM-C5F74F?style=for-the-badge&logoColor=black" alt="Drizzle" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind" />
+</p>
 
 ## Status
 
@@ -75,4 +113,4 @@ Sepolia testnet deployment in progress.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-white.svg)](https://github.com/Qryptumorg/contracts/blob/main/LICENSE)
 
-Copyright (c) 2026 [wei-zuan](https://github.com/wei-zuan). MIT License.
+Copyright (c) 2026 [wei-zuan](https://github.com/wei-zuan). See [LICENSE](https://github.com/Qryptumorg/contracts/blob/main/LICENSE) for full terms.

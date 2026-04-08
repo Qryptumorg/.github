@@ -12,10 +12,10 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Qryptumorg/contracts/actions/workflows/ci.yml"><img src="https://github.com/Qryptumorg/contracts/actions/workflows/ci.yml/badge.svg" alt="contracts CI" /></a>
+  <a href="https://github.com/Qryptumorg/contracts/actions/workflows/test.yml"><img src="https://github.com/Qryptumorg/contracts/actions/workflows/test.yml/badge.svg" alt="contracts CI" /></a>
   <a href="https://github.com/Qryptumorg/app/actions/workflows/ci.yml"><img src="https://github.com/Qryptumorg/app/actions/workflows/ci.yml/badge.svg" alt="app CI" /></a>
   <a href="https://github.com/Qryptumorg/api/actions/workflows/ci.yml"><img src="https://github.com/Qryptumorg/api/actions/workflows/ci.yml/badge.svg" alt="api CI" /></a>
-  <a href="https://github.com/Qryptumorg/db/actions/workflows/ci.yml"><img src="https://github.com/Qryptumorg/db/actions/workflows/ci.yml/badge.svg" alt="db CI" /></a>
+  <a href="https://github.com/Qryptumorg/db/actions/workflows/check.yml"><img src="https://github.com/Qryptumorg/db/actions/workflows/check.yml/badge.svg" alt="db CI" /></a>
 </p>
 
 ---
@@ -87,7 +87,7 @@ They can choose to shield it into their own QRYPTANK if they want.
 | [app](https://github.com/Qryptumorg/app) | Frontend dApp | React 19, Vite, wagmi, TypeScript |
 | [api](https://github.com/Qryptumorg/api) | Backend REST API | Express, TypeScript, PostgreSQL |
 | [db](https://github.com/Qryptumorg/db) | Database schema | Drizzle ORM, PostgreSQL |
-| [site](https://github.com/Qryptumorg/site) | Marketing and docs site | React 19, Vite, Tailwind CSS v4 |
+| [site](https://github.com/Qryptumorg/site) | Landing page and docs | React 19, Vite, Tailwind CSS v4 |
 
 ## Stack
 

@@ -24,8 +24,8 @@
 
 **Non-custodial, post-quantum ready token shielding protocol on Ethereum.**
 
-Qryptum lets you shield any ERC-20 token into your own personal QRYPTANK vault.
-Each QRYPTANK is a smart contract you alone control, protected by a 6-character
+Qryptum lets you shield any ERC-20 token into your own personal Qrypt-Safe vault.
+Each Qrypt-Safe is a smart contract you alone control, protected by a 6-character
 cryptographic vault proof. Shielded tokens become qTokens (e.g. qUSDT, qETH):
 non-transferable at the contract level and impossible to move without both your
 private key and your vault proof simultaneously.
@@ -47,7 +47,7 @@ No pool. No custody. No admin keys. Your tokens never leave your own vault contr
 
 ```mermaid
 flowchart TD
-    A[User Wallet] -->|1. shield and vault proof| B[QRYPTANK PersonalVault]
+    A[User Wallet] -->|1. shield and vault proof| B[Qrypt-Safe PersonalVault]
     B -->|2. pulls ERC-20 from wallet| B
     B -->|3. deploys qToken contract on first shield| C[qToken Contract e.g. qUSDT]
     C -->|4. mints qUSDT to user wallet| A
@@ -58,7 +58,7 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    A[Sender Wallet] -->|1. commitTransfer: submit hash| V[QRYPTANK Vault]
+    A[Sender Wallet] -->|1. commitTransfer: submit hash| V[Qrypt-Safe Vault]
     V -->|2. wait 1 block| V
     A -->|3. revealTransfer: vault proof and nonce| V
     V -->|4. burn qToken from sender| V
@@ -67,7 +67,7 @@ flowchart LR
 ```
 
 The recipient always receives the original ERC-20 token, not qToken.
-They can choose to shield it into their own QRYPTANK if they want.
+They can choose to shield it into their own Qrypt-Safe if they want.
 
 ## Security model
 

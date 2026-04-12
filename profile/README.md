@@ -1,5 +1,9 @@
 <p align="center">
+  <picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Qryptumorg/.github/main/profile/banner.png" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Qryptumorg/.github/main/profile/banner-light.png" />
   <img src="https://raw.githubusercontent.com/Qryptumorg/.github/main/profile/banner.png" alt="Qryptum" width="100%" />
+</picture>
 </p>
 
 <p align="center">

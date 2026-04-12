@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Qryptumorg/site/main/public/og-image.png" alt="Qryptum" width="100%" />
+  <img src="https://raw.githubusercontent.com/Qryptumorg/.github/main/profile/banner.png" alt="Qryptum" width="100%" />
 </p>
 
 <p align="center">

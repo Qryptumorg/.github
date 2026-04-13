@@ -50,18 +50,27 @@ Qryptum eliminates this exposure without introducing a custodian.
 
 ## How It Works
 
-Every QryptSafe vault enforces two independent security layers
-simultaneously:
+### Private Key vs QryptSafe: Side by Side
 
-| Layer | Mechanism | What It Blocks |
+Most crypto losses start with the same root cause: the private key is the only gate. QryptSafe adds an independent second layer that the private key cannot override.
+
+| | Traditional EOA | QryptSafe Vault |
 |---|---|---|
-| Layer 1 | `onlyOwner` - private key signature | Any caller who does not hold the wallet private key |
-| Layer 2 | OTP vault proof - single-use keccak256 chain | Fund movement even when the wallet private key is fully compromised |
+| **Security gate** | Private key only | Private key + OTP vault proof (both required) |
+| **Key compromised** | Full drain in one `transfer()` | Attacker gains nothing - funds stay locked |
+| **Token transfers** | `transfer()` works freely | `transfer()`, `transferFrom()`, `approve()` always revert on-chain |
+| **Where funds live** | Wallet address (same as signing key) | Isolated vault contract per user, not the wallet |
+| **Replay protection** | None | `proofChainHead` advances atomically - each OTP is single-use |
+| **Privacy exit** | None | `enterRailgun` severs on-chain sender/recipient link |
 
-Both layers must be defeated simultaneously. A compromised private key
-alone yields nothing: `transfer()`, `transferFrom()`, and `approve()`
-on all qTokens always revert at the contract level. Funds cannot move
-without the OTP vault proof.
+### The Two Layers
+
+Both must be defeated at the same time. Defeating either one alone accomplishes nothing.
+
+| Layer | Mechanism | If broken alone |
+|---|---|---|
+| **Layer 1** | `onlyOwner` - ECDSA private key signature | Attacker still needs the vault OTP proof to move any funds |
+| **Layer 2** | OTP chain - single-use keccak256, `proofChainHead` advances per call | Attacker still needs the private key to call any vault function |
 
 ```mermaid
 flowchart TD
@@ -183,8 +192,8 @@ All contracts are MIT-licensed and verified on Sepolia Etherscan.
 | V3 | 5 / 5 | Sepolia | [qrypt-safe-v3](https://qryptum.org/docs/contracts/qrypt-safe-v3) |
 | V4 | 10 / 10 | Sepolia | [qrypt-safe-v4](https://qryptum.org/docs/contracts/qrypt-safe-v4) |
 | V5 | 51 / 51 | Sepolia | [qrypt-safe-v5](https://qryptum.org/docs/contracts/qrypt-safe-v5) |
-| V6 | 50 / 50 | Sepolia | [qrypt-safe-v6](https://qryptum.org/docs/contracts/qrypt-safe-v6) |
-| **Total** | **151 / 151** | | |
+| V6 | 67 / 67 | Sepolia | [qrypt-safe-v6](https://qryptum.org/docs/contracts/qrypt-safe-v6) |
+| **Total** | **168 / 168** | | |
 
 All tests run end-to-end against live deployed contracts on Sepolia.
 

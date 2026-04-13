@@ -1,13 +1,9 @@
-<p align="center">
-  <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Qryptumorg/.github/main/profile/banner.png" />
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Qryptumorg/.github/main/profile/banner-light.png" />
-  <img src="https://raw.githubusercontent.com/Qryptumorg/.github/main/profile/banner.png" alt="Qryptum" width="100%" />
-</picture>
-</p>
+<h1 align="center">QRYPTUM</h1>
+
+<h3 align="center">The Security Layer Beyond Your Private Key</h3>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Solidity-0.8.24-363636?style=flat-square&logo=solidity&logoColor=white" alt="Solidity" />
+  <img src="https://img.shields.io/badge/Solidity-0.8.34-363636?style=flat-square&logo=solidity&logoColor=white" alt="Solidity" />
   <img src="https://img.shields.io/badge/TypeScript-5.7-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
   <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React" />
   <img src="https://img.shields.io/badge/Ethereum-L1-3C3C3D?style=flat-square&logo=ethereum&logoColor=white" alt="Ethereum" />
@@ -22,99 +18,176 @@
   <a href="https://github.com/Qryptumorg/db/actions/workflows/check.yml"><img src="https://github.com/Qryptumorg/db/actions/workflows/check.yml/badge.svg" alt="db CI" /></a>
 </p>
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Qryptumorg/.github/main/profile/banner.png" />
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Qryptumorg/.github/main/profile/banner-light.png" />
+    <img src="https://raw.githubusercontent.com/Qryptumorg/.github/main/profile/banner.png" alt="Qryptum" width="100%" />
+  </picture>
+</p>
+
+<p align="center">
+  <a href="https://qryptum.org">qryptum.org</a> ·
+  <a href="https://qryptum.org/docs">Docs</a> ·
+  <a href="https://sepolia.etherscan.io/address/0xeaa722e996888b662E71aBf63d08729c6B6802F4">Sepolia Etherscan</a> ·
+  <a href="https://github.com/Qryptumorg/contracts">contracts</a> ·
+  <a href="https://github.com/Qryptumorg/app">app</a> ·
+  <a href="https://github.com/Qryptumorg/docs">docs</a>
+</p>
+
 ---
 
-# Qryptum
+## The Problem
 
-**Non-custodial, post-quantum ready token shielding protocol on Ethereum.**
+Private key exposure is the single largest cause of crypto loss.
+Phishing, malware, compromised seed phrases, social engineering: the
+result is always the same. Once an attacker holds your private key,
+every ERC-20 token in your wallet can be drained in seconds.
 
-Qryptum lets you shield any ERC-20 token into your own personal Qrypt-Safe vault.
-Each Qrypt-Safe is a smart contract you alone control, protected by a 6-character
-cryptographic vault proof. Shielded tokens become qTokens (e.g. qUSDT, qETH):
-non-transferable at the contract level and impossible to move without both your
-private key and your vault proof simultaneously.
+Qryptum eliminates this exposure without introducing a custodian.
 
-No pool. No custody. No admin keys. Your tokens never leave your own vault contract.
+---
 
-## What makes it different
+## How It Works
 
-| Feature | Detail |
-|---|---|
-| Full self-custody | Your vault is your own smart contract. Qryptum holds nothing and has zero admin access. |
-| Non-transferable qTokens | qToken transfer(), transferFrom(), and approve() always revert at contract level. Not just a UI restriction. |
-| Commit-reveal transfers | Two-step transfer hides recipient and amount until reveal, protecting against front-running. |
-| Vault proof protection | All vault operations require your cryptographic vault proof verified on-chain via keccak256. |
-| Post-quantum design | Vault proof architecture designed with quantum-resistant access patterns in mind. |
-| No shared pool | Every user gets one isolated vault contract for life. Funds are never commingled. |
+Every QryptSafe vault enforces two independent security layers
+simultaneously:
 
-## How shielding works
+| Layer | Mechanism | What It Blocks |
+|---|---|---|
+| Layer 1 | `onlyOwner` - private key signature | Any caller who does not hold the wallet private key |
+| Layer 2 | OTP vault proof - single-use keccak256 chain | Fund movement even when the wallet private key is fully compromised |
+
+Both layers must be defeated simultaneously. A compromised private key
+alone yields nothing: `transfer()`, `transferFrom()`, and `approve()`
+on all qTokens always revert at the contract level. Funds cannot move
+without the OTP vault proof.
 
 ```mermaid
 flowchart TD
-    A[User Wallet] -->|1. shield and vault proof| B[Qrypt-Safe PersonalVault]
-    B -->|2. pulls ERC-20 from wallet| B
-    B -->|3. deploys qToken contract on first shield| C[qToken Contract e.g. qUSDT]
-    C -->|4. mints qUSDT to user wallet| A
-    A -->|qUSDT balance visible but non-transferable| A
+    W([User Wallet]) -->|"Layer 1: private key required"| OO{onlyOwner}
+    OO -->|"Layer 2: OTP vault proof consumed"| VS[QryptSafe Vault]
+
+    VS --> QR["Qrypt: deposit tokens into vault"]
+    VS --> UQ["unQrypt: withdraw tokens from vault"]
+    VS --> IT["initTransfer: commit phase"]
+    IT --> FT["finalizeTransfer: reveal and execute"]
+    VS --> AB["fundAirBags: allocate QryptAir budget"]
+    VS --> ER["enterRailgun: atomic unQrypt to Railgun ZK pool"]
+
+    QR --> QT["qToken minted to owner\ntransfer() revert\napprove() revert"]
+    UQ --> UT["qToken burned\nunderlying ERC-20 released"]
+    FT --> TR["qToken burned\ntransfer to recipient"]
+    AB --> AV["claimAirVoucher: EIP-712 offline voucher redeemed by recipient"]
+    ER --> RG["Railgun ZK Pool\non-chain link severed"]
+
+    style VS fill:#1a1a1a,color:#fff,stroke:#374151
+    style QT fill:#1e1e1e,color:#e74c3c,stroke:#374151
+    style RG fill:#1e1e1e,color:#6b7280,stroke:#374151
 ```
 
-## How shielded transfers work
+---
 
-```mermaid
-flowchart LR
-    A[Sender Wallet] -->|1. commitTransfer: submit hash| V[Qrypt-Safe Vault]
-    V -->|2. wait 1 block| V
-    A -->|3. revealTransfer: vault proof and nonce| V
-    V -->|4. burn qToken from sender| V
-    V -->|5. send raw ERC-20 directly| B[Recipient Wallet]
-    B -->|receives USDT not qUSDT| B
-```
+## Products
 
-The recipient always receives the original ERC-20 token, not qToken.
-They can choose to shield it into their own Qrypt-Safe if they want.
+### QryptSafe
 
-## Security model
+Non-custodial vault contract. Tokens are held at the vault address, not
+in the user's wallet. In place of real tokens, the owner receives
+non-transferable qTokens (qUSDC, qWETH, etc.).
+
+`transfer()`, `transferFrom()`, and `approve()` on all qTokens always
+revert at the contract level. No wallet, exchange, or script can move
+them. Draining a wallet private key yields nothing.
+
+**Key functions:** `Qrypt` · `unQrypt` · `initTransfer` · `finalizeTransfer` · `rechargeChain` · `emergencyWithdraw`
+
+---
+
+### QryptAir
+
+Offline EIP-712 signed vouchers. The vault owner signs a typed voucher
+entirely offline. The signed voucher is shared with the recipient as a
+QR code. The recipient broadcasts `claimAirVoucher` on-chain. The vault
+verifies the signature and transfers funds directly to the recipient.
+
+The signing key never touches a live network node during the signing
+session.
+
+**Key functions:** `fundAirBags` · `reclaimAirBags` · `claimAirVoucher`
+
+---
+
+### QryptShield
+
+Atomic unQrypt-to-Railgun in a single transaction. Calls `enterRailgun`
+to burn qTokens, approve the Railgun proxy, and shield into the Railgun
+ZK privacy pool atomically. Zero-knowledge proofs cryptographically
+sever the on-chain link between sender and recipient.
+
+No Qryptum-owned contracts are involved in the Railgun layer. The
+Railgun protocol handles all ZK logic.
+
+**Key function:** `enterRailgun` · [Railgun on GitHub](https://github.com/Railgun-Community)
+
+---
+
+## Smart Contracts
+
+### Sepolia Testnet (V6 - Active)
+
+| Contract | Address |
+|---|---|
+| QryptSafeV6 (factory) | `0xeaa722e996888b662E71aBf63d08729c6B6802F4` |
+| PersonalQryptSafeV6 (impl) | `0x3E03f768476a763A48f2E00B73e4dC69f9E8A7E3` |
+
+All contracts are MIT-licensed and verified on Sepolia Etherscan.
+
+[View all deployed addresses](https://qryptum.org/docs/contracts/deployed-addresses)
+
+---
+
+## Security Properties
 
 | Property | Detail |
 |---|---|
-| Vault model | Each user owns their personal vault contract. Qryptum holds nothing. |
-| Admin access | Qryptum deployer has zero access to any user vault. No upgrade keys. No backdoors. |
-| Vault proof | Raw proof sent in calldata, verified on-chain via keccak256. Safe because private key is still required. |
-| Transfer safety | Requires private key and vault proof at the same time. Compromising one alone is not enough. |
-| qToken design | Non-transferable permanently at Solidity level, not just in the UI. |
+| Non-custodial | Tokens held at vault contract. Qryptum deployer has zero admin keys. |
+| Non-transferable qTokens | `transfer()`, `transferFrom()`, `approve()` always revert on-chain. |
+| Dual-factor | Every vault operation requires private key AND OTP vault proof simultaneously. |
+| OTP chain replay protection | Each proof is single-use. `proofChainHead` advances atomically on every call. |
+| Air voucher nonce | Each `claimAirVoucher` nonce is single-use. Double-spend is structurally impossible. |
+| Isolated vaults | Each user has a unique vault address. Balances are never pooled. |
+| Emergency exit | `emergencyWithdraw` available after 1,296,000 blocks (~6 months) of inactivity. No OTP required. |
+| ZK privacy | QryptShield routes through Railgun. Sender, recipient, and amount are hidden from on-chain observers. |
+
+---
 
 ## Repositories
 
 | Repo | Description | Stack |
 |---|---|---|
-| [contracts](https://github.com/Qryptumorg/contracts) | ShieldFactory, PersonalVault, ShieldToken | Solidity 0.8.24, Hardhat |
+| [contracts](https://github.com/Qryptumorg/contracts) | QryptFactory, PersonalVault, qToken | Solidity 0.8.34, Hardhat |
 | [app](https://github.com/Qryptumorg/app) | Frontend dApp | React 19, Vite, wagmi, TypeScript |
 | [api](https://github.com/Qryptumorg/api) | Backend REST API | Express, TypeScript, PostgreSQL |
 | [db](https://github.com/Qryptumorg/db) | Database schema | Drizzle ORM, PostgreSQL |
 | [site](https://github.com/Qryptumorg/site) | Landing page and docs | React 19, Vite, Tailwind CSS v4 |
 
-## Stack
+---
 
-<p>
-  <img src="https://img.shields.io/badge/Solidity-0.8.24-363636?style=for-the-badge&logo=solidity&logoColor=white" alt="Solidity" />
-  <img src="https://img.shields.io/badge/Hardhat-yellow?style=for-the-badge&logo=ethereum&logoColor=white" alt="Hardhat" />
-  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React" />
-  <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
-  <img src="https://img.shields.io/badge/wagmi-3C3C3D?style=for-the-badge&logo=ethereum&logoColor=white" alt="wagmi" />
-  <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express" />
-  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
-  <img src="https://img.shields.io/badge/Drizzle_ORM-C5F74F?style=for-the-badge&logoColor=black" alt="Drizzle" />
-  <img src="https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind" />
-</p>
+## Test Coverage
 
-## Status
+| Version | Tests | Network | Docs |
+|---|---|---|---|
+| V1 | 12 / 12 | Sepolia | [qrypt-safe-v1](https://qryptum.org/docs/contracts/qrypt-safe-v1) |
+| V2 | 23 / 23 | Sepolia | [qrypt-safe-v2](https://qryptum.org/docs/contracts/qrypt-safe-v2) |
+| V3 | 5 / 5 | Sepolia | [qrypt-safe-v3](https://qryptum.org/docs/contracts/qrypt-safe-v3) |
+| V4 | 10 / 10 | Sepolia | [qrypt-safe-v4](https://qryptum.org/docs/contracts/qrypt-safe-v4) |
+| V5 | 51 / 51 | Sepolia | [qrypt-safe-v5](https://qryptum.org/docs/contracts/qrypt-safe-v5) |
+| V6 | 50 / 50 | Sepolia | [qrypt-safe-v6](https://qryptum.org/docs/contracts/qrypt-safe-v6) |
+| **Total** | **151 / 151** | | |
 
-Active development. Smart contracts complete with 83 passing test cases.
-Sepolia testnet deployment in progress.
+All tests run end-to-end against live deployed contracts on Sepolia.
 
-## License
+---
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-white.svg)](https://github.com/Qryptumorg/contracts/blob/main/LICENSE)
-
-Copyright (c) 2026 [wei-zuan](https://github.com/wei-zuan). See [LICENSE](https://github.com/Qryptumorg/contracts/blob/main/LICENSE) for full terms.
+<p align="center">MIT License · <a href="https://qryptum.org">qryptum.org</a></p>

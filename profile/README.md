@@ -190,4 +190,4 @@ All tests run end-to-end against live deployed contracts on Sepolia.
 
 ---
 
-<p align="center">MIT License · <a href="https://qryptum.org">qryptum.org</a></p>
+<p align="center"><a href="https://github.com/Qryptumorg/contracts/blob/main/LICENSE">MIT License</a> · <a href="https://qryptum.org">qryptum.org</a></p>

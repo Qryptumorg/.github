@@ -28,11 +28,9 @@
 
 <p align="center">
   <a href="https://qryptum.org">qryptum.org</a> ·
-  <a href="https://qryptum.org/docs">Docs</a> ·
-  <a href="https://sepolia.etherscan.io/address/0xeaa722e996888b662E71aBf63d08729c6B6802F4">Sepolia Etherscan</a> ·
-  <a href="https://github.com/Qryptumorg/contracts">contracts</a> ·
-  <a href="https://github.com/Qryptumorg/app">app</a> ·
-  <a href="https://github.com/Qryptumorg/docs">docs</a>
+  <a href="https://qryptum.org/docs">docs</a> ·
+  <a href="https://app.qryptum.org">app</a> ·
+  <a href="https://github.com/Qryptumorg/contracts">contracts</a> 
 </p>
 
 ---

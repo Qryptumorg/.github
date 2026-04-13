@@ -143,7 +143,7 @@ Railgun protocol handles all ZK logic.
 
 All contracts are MIT-licensed and verified on Sepolia Etherscan.
 
-[View all deployed addresses](https://qryptum.org/docs/contracts/deployed-addresses)
+[View all deployed addresses](https://github.com/Qryptumorg/contracts#sepolia-contract-addresses)
 
 ---
 

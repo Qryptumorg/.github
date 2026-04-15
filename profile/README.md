@@ -28,7 +28,7 @@
 <p align="center">
   <a href="https://qryptum.org">qryptum.org</a> ·
   <a href="https://qryptum.org/docs">docs</a> ·
-  <a href="https://app.qryptum.org">app</a> ·
+  <a href="https://qryptum.eth.limo">app</a> ·
   <a href="https://github.com/Qryptumorg/contracts">contracts</a> 
 </p>
 
